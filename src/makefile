@@ -1,0 +1,115 @@
+###############################################################################
+#
+# INSTALLATION DIRECTORIES
+#
+# Change this if you want to install somewhere else. In particularly
+# you may wish to remove the middle "local/" part.
+
+INSTALL_PLUGINS_DIR	=	/usr/local/lib/ladspa/
+
+###############################################################################
+#
+# GENERAL
+#
+
+INCLUDES	=	-I/usr/local/include/
+CFLAGS		=	$(INCLUDES) -Wall -Werror -O3 -fPIC
+CXXFLAGS	=	$(CFLAGS)
+PLUGIN_LIB	=	../plugins/cmt.so
+
+###############################################################################
+#
+# OBJECT FILES
+#
+
+PLUGIN_OBJECTS	=							\
+			am.o						\
+			ambisonic.o					\
+			amp.o						\
+			analogue.o					\
+			canyondelay.o					\
+			cmt.o						\
+			descriptor.o					\
+			delay.o						\
+			dynamic.o					\
+			filter.o					\
+			freeverb/Components/allpass.o			\
+			freeverb/Components/comb.o			\
+			freeverb/Components/revmodel.o			\
+			freeverb/freeverb.o				\
+			grain.o						\
+			init.o						\
+			mixer.o						\
+			noise.o						\
+			null.o						\
+			organ.o						\
+			peak.o						\
+			sine.o						\
+			syndrum.o					\
+			vcf303.o					\
+			wshape_sine.o					\
+
+###############################################################################
+#
+# TARGETS
+#
+
+plugin:	$(PLUGIN_LIB)
+
+targets:	$(PLUGIN_LIB)
+
+$(PLUGIN_LIB):	$(PLUGIN_OBJECTS)
+	$(CXX)	-shared							\
+		-o $(PLUGIN_LIB)					\
+		$(PLUGIN_OBJECTS)					
+
+install:	$(PLUGIN_LIB)
+	-strip $(PLUGIN_LIB)
+	cp $(PLUGIN_LIB) $(INSTALL_PLUGINS_DIR)
+
+test:	/tmp/test.wav ../../LADSPA_SDK/snd/noise.wav always
+	@echo ---------------------------------------------
+	@echo First listen to the white noise input signal:
+	@echo ---------------------------------------------
+	play ../../LADSPA_SDK/snd/noise.wav
+	@echo -------------------------
+	@echo Compare to plugin output.
+	@echo -------------------------
+	@echo Should be a noise band around 6000Hz, repeated quietly after 1s.
+	play /tmp/test.wav
+
+/tmp/test.wav:	$(PLUGIN_LIB) ../../LADSPA_SDK/snd/noise.wav
+	analyseplugin $(PLUGIN_LIB)
+	echo;analyseplugin -l $(PLUGIN_LIB);echo
+	time applyplugin	-s 1					\
+				../../LADSPA_SDK/snd/noise.wav		\
+				/tmp/test.wav				\
+				$(PLUGIN_LIB) lpf 500			\
+				$(PLUGIN_LIB) lpf 500			\
+				$(PLUGIN_LIB) sine_fcaa 6000		\
+				$(PLUGIN_LIB) delay_5s 1 0.1		\
+				$(PLUGIN_LIB) amp_mono 4		\
+
+###############################################################################
+#
+# UTILITIES
+#
+
+depend:		$(MACHINE_GENERATED_CODE)
+		makedepend `find . -name "*.cpp"` $(INCLUDES)
+
+always:	
+
+clean:
+	-rm -f `find . -name "*.o"` ../bin/* ../plugins/*
+	-rm -f `find .. -name "*~"`
+	-rm -f *.bak core score.srt
+	-rm -f *.bb *.bbg *.da *-ann gmon.out bb.out
+	-rm -f `find .. -name "*.class"`
+
+backup:		clean
+	(cd ../../;							\
+	tar czvf `date '+../backup/cmt.%Y%m%d%H%M.tgz'` cmt/)
+
+###############################################################################
+
