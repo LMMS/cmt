@@ -1,7 +1,7 @@
 /* dynamic.cpp
 
    Computer Music Toolkit - a library of LADSPA plugins. Copyright (C)
-   2000 Richard W.E. Furse. The author may be contacted at
+   2000-2002 Richard W.E. Furse. The author may be contacted at
    richard@muse.demon.co.uk.
 
    This library is free software; you can redistribute it and/or
@@ -508,7 +508,7 @@ initialise_dynamic() {
      LADSPA_PROPERTY_HARD_RT_CAPABLE,
      "Simple Compressor (Peak Envelope Tracking)",
      CMT_MAKER("Richard W.E. Furse"),
-     CMT_COPYRIGHT("2000", "Richard W.E. Furse"),
+     CMT_COPYRIGHT("2000-2002", "Richard W.E. Furse"),
      NULL,
      CMT_Instantiate<CompressorExpander>,
      activateCompressorExpander,
@@ -519,24 +519,32 @@ initialise_dynamic() {
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Threshold",
-     LADSPA_HINT_BOUNDED_BELOW | LADSPA_HINT_LOGARITHMIC,
+     (LADSPA_HINT_BOUNDED_BELOW 
+      | LADSPA_HINT_LOGARITHMIC
+      | LADSPA_HINT_DEFAULT_1),
+     0,
      0);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Compression Ratio",
-     LADSPA_HINT_BOUNDED_ABOVE,
+     (LADSPA_HINT_BOUNDED_ABOVE
+      | LADSPA_HINT_DEFAULT_MIDDLE),
      0,
      1);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Output Envelope Attack (s)",
-     LADSPA_HINT_BOUNDED_BELOW,
-     0);
+     (LADSPA_HINT_BOUNDED_BELOW
+      | LADSPA_HINT_DEFAULT_MAXIMUM),
+     0,
+     0.1f);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Output Envelope Decay (s)",
-     LADSPA_HINT_BOUNDED_BELOW,
-     0);
+     (LADSPA_HINT_BOUNDED_BELOW
+      | LADSPA_HINT_DEFAULT_MAXIMUM),
+     0,
+     0.1f);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_AUDIO,
      "Input");
@@ -551,7 +559,7 @@ initialise_dynamic() {
      LADSPA_PROPERTY_HARD_RT_CAPABLE,
      "Simple Compressor (RMS Envelope Tracking)",
      CMT_MAKER("Richard W.E. Furse"),
-     CMT_COPYRIGHT("2000", "Richard W.E. Furse"),
+     CMT_COPYRIGHT("2000-2002", "Richard W.E. Furse"),
      NULL,
      CMT_Instantiate<CompressorExpander>,
      activateCompressorExpander,
@@ -562,24 +570,32 @@ initialise_dynamic() {
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Threshold",
-     LADSPA_HINT_BOUNDED_BELOW | LADSPA_HINT_LOGARITHMIC,
+     (LADSPA_HINT_BOUNDED_BELOW 
+      | LADSPA_HINT_LOGARITHMIC
+      | LADSPA_HINT_DEFAULT_1),
+     0,
      0);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Compression Ratio",
-     LADSPA_HINT_BOUNDED_ABOVE,
+     (LADSPA_HINT_BOUNDED_ABOVE
+      | LADSPA_HINT_DEFAULT_MIDDLE),
      0,
      1);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Output Envelope Attack (s)",
-     LADSPA_HINT_BOUNDED_BELOW,
-     0);
+     (LADSPA_HINT_BOUNDED_BELOW
+      | LADSPA_HINT_DEFAULT_MAXIMUM),
+     0,
+     0.1f);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Output Envelope Decay (s)",
-     LADSPA_HINT_BOUNDED_BELOW,
-     0);
+     (LADSPA_HINT_BOUNDED_BELOW
+      | LADSPA_HINT_DEFAULT_MAXIMUM),
+     0,
+     0.1f);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_AUDIO,
      "Input");
@@ -594,7 +610,7 @@ initialise_dynamic() {
      LADSPA_PROPERTY_HARD_RT_CAPABLE,
      "Simple Expander (Peak Envelope Tracking)",
      CMT_MAKER("Richard W.E. Furse"),
-     CMT_COPYRIGHT("2000", "Richard W.E. Furse"),
+     CMT_COPYRIGHT("2000-2002", "Richard W.E. Furse"),
      NULL,
      CMT_Instantiate<CompressorExpander>,
      activateCompressorExpander,
@@ -605,24 +621,32 @@ initialise_dynamic() {
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Threshold",
-     LADSPA_HINT_BOUNDED_BELOW | LADSPA_HINT_LOGARITHMIC,
+     (LADSPA_HINT_BOUNDED_BELOW 
+      | LADSPA_HINT_LOGARITHMIC
+      | LADSPA_HINT_DEFAULT_1),
+     0,
      0);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Expansion Ratio",
-     LADSPA_HINT_BOUNDED_ABOVE,
+     (LADSPA_HINT_BOUNDED_ABOVE
+      | LADSPA_HINT_DEFAULT_MIDDLE),
      0,
      1);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Output Envelope Attack (s)",
-     LADSPA_HINT_BOUNDED_BELOW,
-     0);
+     (LADSPA_HINT_BOUNDED_BELOW
+      | LADSPA_HINT_DEFAULT_MAXIMUM),
+     0,
+     0.1f);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Output Envelope Decay (s)",
-     LADSPA_HINT_BOUNDED_BELOW,
-     0);
+     (LADSPA_HINT_BOUNDED_BELOW
+      | LADSPA_HINT_DEFAULT_MAXIMUM),
+     0,
+     0.1f);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_AUDIO,
      "Input");
@@ -637,7 +661,7 @@ initialise_dynamic() {
      LADSPA_PROPERTY_HARD_RT_CAPABLE,
      "Simple Expander (RMS Envelope Tracking)",
      CMT_MAKER("Richard W.E. Furse"),
-     CMT_COPYRIGHT("2000", "Richard W.E. Furse"),
+     CMT_COPYRIGHT("2000-2002", "Richard W.E. Furse"),
      NULL,
      CMT_Instantiate<CompressorExpander>,
      activateCompressorExpander,
@@ -648,24 +672,32 @@ initialise_dynamic() {
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Threshold",
-     LADSPA_HINT_BOUNDED_BELOW | LADSPA_HINT_LOGARITHMIC,
+     (LADSPA_HINT_BOUNDED_BELOW 
+      | LADSPA_HINT_LOGARITHMIC
+      | LADSPA_HINT_DEFAULT_1),
+     0,
      0);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Expansion Ratio",
-     LADSPA_HINT_BOUNDED_ABOVE,
+     (LADSPA_HINT_BOUNDED_ABOVE
+      | LADSPA_HINT_DEFAULT_MIDDLE),
      0,
      1);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Output Envelope Attack (s)",
-     LADSPA_HINT_BOUNDED_BELOW,
-     0);
+     (LADSPA_HINT_BOUNDED_BELOW
+      | LADSPA_HINT_DEFAULT_MAXIMUM),
+     0,
+     0.1f);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Output Envelope Decay (s)",
-     LADSPA_HINT_BOUNDED_BELOW,
-     0);
+     (LADSPA_HINT_BOUNDED_BELOW
+      | LADSPA_HINT_DEFAULT_MAXIMUM),
+     0,
+     0.1f);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_AUDIO,
      "Input");
@@ -680,7 +712,7 @@ initialise_dynamic() {
      LADSPA_PROPERTY_HARD_RT_CAPABLE,
      "Simple Limiter (Peak Envelope Tracking)",
      CMT_MAKER("Richard W.E. Furse"),
-     CMT_COPYRIGHT("2000", "Richard W.E. Furse"),
+     CMT_COPYRIGHT("2000-2002", "Richard W.E. Furse"),
      NULL,
      CMT_Instantiate<Limiter>,
      activateLimiter,
@@ -691,18 +723,25 @@ initialise_dynamic() {
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Threshold",
-     LADSPA_HINT_BOUNDED_BELOW | LADSPA_HINT_LOGARITHMIC,
+     (LADSPA_HINT_BOUNDED_BELOW 
+      | LADSPA_HINT_LOGARITHMIC
+      | LADSPA_HINT_DEFAULT_1),
+     0,
      0);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Output Envelope Attack (s)",
-     LADSPA_HINT_BOUNDED_BELOW,
-     0);
+     (LADSPA_HINT_BOUNDED_BELOW
+      | LADSPA_HINT_DEFAULT_MAXIMUM),
+     0,
+     0.1f);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Output Envelope Decay (s)",
-     LADSPA_HINT_BOUNDED_BELOW,
-     0);
+     (LADSPA_HINT_BOUNDED_BELOW
+      | LADSPA_HINT_DEFAULT_MAXIMUM),
+     0,
+     0.1f);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_AUDIO,
      "Input");
@@ -717,7 +756,7 @@ initialise_dynamic() {
      LADSPA_PROPERTY_HARD_RT_CAPABLE,
      "Simple Limiter (RMS Envelope Tracking)",
      CMT_MAKER("Richard W.E. Furse"),
-     CMT_COPYRIGHT("2000", "Richard W.E. Furse"),
+     CMT_COPYRIGHT("2000-2002", "Richard W.E. Furse"),
      NULL,
      CMT_Instantiate<Limiter>,
      activateLimiter,
@@ -728,18 +767,25 @@ initialise_dynamic() {
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Threshold",
-     LADSPA_HINT_BOUNDED_BELOW | LADSPA_HINT_LOGARITHMIC,
+     (LADSPA_HINT_BOUNDED_BELOW 
+      | LADSPA_HINT_LOGARITHMIC
+      | LADSPA_HINT_DEFAULT_1),
+     0,
      0);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Output Envelope Attack (s)",
-     LADSPA_HINT_BOUNDED_BELOW,
-     0);
+     (LADSPA_HINT_BOUNDED_BELOW
+      | LADSPA_HINT_DEFAULT_MAXIMUM),
+     0,
+     0.1f);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Output Envelope Decay (s)",
-     LADSPA_HINT_BOUNDED_BELOW,
-     0);
+     (LADSPA_HINT_BOUNDED_BELOW
+      | LADSPA_HINT_DEFAULT_MAXIMUM),
+     0,
+     0.1f);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_AUDIO,
      "Input");

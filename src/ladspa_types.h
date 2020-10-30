@@ -26,6 +26,19 @@
 
 #include <ladspa.h>
 
+/* Compatibility hack for version 1.0. */
+#ifndef LADSPA_VERSION_MAJOR
+#define LADSPA_HINT_DEFAULT_MINIMUM 0x40
+#define LADSPA_HINT_DEFAULT_LOW     0x80
+#define LADSPA_HINT_DEFAULT_MIDDLE  0xC0
+#define LADSPA_HINT_DEFAULT_HIGH    0x100
+#define LADSPA_HINT_DEFAULT_MAXIMUM 0x140
+#define LADSPA_HINT_DEFAULT_0       0x200
+#define LADSPA_HINT_DEFAULT_1       0x240
+#define LADSPA_HINT_DEFAULT_100     0x280
+#define LADSPA_HINT_DEFAULT_440     0x2C0
+#endif
+
 /*****************************************************************************/
 
 typedef LADSPA_Handle (*LADSPA_Instantiate_Function)

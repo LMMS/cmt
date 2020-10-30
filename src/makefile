@@ -39,15 +39,24 @@ PLUGIN_OBJECTS	=							\
 			freeverb/freeverb.o				\
 			grain.o						\
 			init.o						\
+			lofi.o						\
 			mixer.o						\
 			noise.o						\
 			null.o						\
 			organ.o						\
 			peak.o						\
+			phasemod.o					\
 			sine.o						\
 			syndrum.o					\
 			vcf303.o					\
 			wshape_sine.o					\
+			hardgate.o					\
+			disintegrator.o					\
+			pink.o						\
+			pink_full.o					\
+			pink_sh.o					\
+			sledgehammer.o					\
+			logistic.o					\
 
 ###############################################################################
 #
@@ -67,22 +76,22 @@ install:	$(PLUGIN_LIB)
 	-strip $(PLUGIN_LIB)
 	cp $(PLUGIN_LIB) $(INSTALL_PLUGINS_DIR)
 
-test:	/tmp/test.wav ../../LADSPA_SDK/snd/noise.wav always
+test:	/tmp/test.wav ../../ladspa_sdk/snd/noise.wav always
 	@echo ---------------------------------------------
 	@echo First listen to the white noise input signal:
 	@echo ---------------------------------------------
-	play ../../LADSPA_SDK/snd/noise.wav
+	play ../../ladspa_sdk/snd/noise.wav
 	@echo -------------------------
 	@echo Compare to plugin output.
 	@echo -------------------------
 	@echo Should be a noise band around 6000Hz, repeated quietly after 1s.
 	play /tmp/test.wav
 
-/tmp/test.wav:	$(PLUGIN_LIB) ../../LADSPA_SDK/snd/noise.wav
+/tmp/test.wav:	$(PLUGIN_LIB) ../../ladspa_sdk/snd/noise.wav
 	analyseplugin $(PLUGIN_LIB)
 	echo;analyseplugin -l $(PLUGIN_LIB);echo
 	time applyplugin	-s 1					\
-				../../LADSPA_SDK/snd/noise.wav		\
+				../../ladspa_sdk/snd/noise.wav		\
 				/tmp/test.wav				\
 				$(PLUGIN_LIB) lpf 500			\
 				$(PLUGIN_LIB) lpf 500			\
@@ -112,4 +121,5 @@ backup:		clean
 	tar czvf `date '+../backup/cmt.%Y%m%d%H%M.tgz'` cmt/)
 
 ###############################################################################
+
 

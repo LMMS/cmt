@@ -1,7 +1,7 @@
 /* ambisonic.cpp
 
    Computer Music Toolkit - a library of LADSPA plugins. Copyright (C)
-   2000 Richard W.E. Furse. The author may be contacted at
+   2000-2002 Richard W.E. Furse. The author may be contacted at
    richard@muse.demon.co.uk.
 
    This library is free software; you can redistribute it and/or
@@ -561,15 +561,15 @@ runBFormatRotation(LADSPA_Handle Instance,
   LADSPA_Data fSin = sin(fAngle);
   LADSPA_Data fCos = cos(fAngle);
 
-  LADSPA_Data * pfInW  = poProcessor->m_ppfPorts[FMHROT_IN_W];
-  LADSPA_Data * pfInX  = poProcessor->m_ppfPorts[FMHROT_IN_X];
-  LADSPA_Data * pfInY  = poProcessor->m_ppfPorts[FMHROT_IN_Y];
-  LADSPA_Data * pfInZ  = poProcessor->m_ppfPorts[FMHROT_IN_Z];
+  LADSPA_Data * pfInW  = poProcessor->m_ppfPorts[BFROT_IN_W];
+  LADSPA_Data * pfInX  = poProcessor->m_ppfPorts[BFROT_IN_X];
+  LADSPA_Data * pfInY  = poProcessor->m_ppfPorts[BFROT_IN_Y];
+  LADSPA_Data * pfInZ  = poProcessor->m_ppfPorts[BFROT_IN_Z];
 
-  LADSPA_Data * pfOutW  = poProcessor->m_ppfPorts[FMHROT_OUT_W];
-  LADSPA_Data * pfOutX  = poProcessor->m_ppfPorts[FMHROT_OUT_X];
-  LADSPA_Data * pfOutY  = poProcessor->m_ppfPorts[FMHROT_OUT_Y];
-  LADSPA_Data * pfOutZ  = poProcessor->m_ppfPorts[FMHROT_OUT_Z];
+  LADSPA_Data * pfOutW  = poProcessor->m_ppfPorts[BFROT_OUT_W];
+  LADSPA_Data * pfOutX  = poProcessor->m_ppfPorts[BFROT_OUT_X];
+  LADSPA_Data * pfOutY  = poProcessor->m_ppfPorts[BFROT_OUT_Y];
+  LADSPA_Data * pfOutZ  = poProcessor->m_ppfPorts[BFROT_OUT_Z];
 
   int iSize = sizeof(LADSPA_Data) * SampleCount;
   memcpy(pfOutW, pfInW, iSize);
@@ -659,7 +659,7 @@ initialise_ambisonic() {
      LADSPA_PROPERTY_HARD_RT_CAPABLE,
      "Ambisonic Encoder (B-Format)",
      CMT_MAKER("Richard W.E. Furse"),
-     CMT_COPYRIGHT("2000", "Richard W.E. Furse"),
+     CMT_COPYRIGHT("2000-2002", "Richard W.E. Furse"),
      NULL,
      CMT_Instantiate<BFormatEncoder>,
      NULL,
@@ -672,13 +672,16 @@ initialise_ambisonic() {
      "Input");
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
-     "Sound Source X Coordinate");
+     "Sound Source X Coordinate",
+     LADSPA_HINT_DEFAULT_1);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
-     "Sound Source Y Coordinate");
+     "Sound Source Y Coordinate",
+     LADSPA_HINT_DEFAULT_0);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
-     "Sound Source Z Coordinate");
+     "Sound Source Z Coordinate",
+     LADSPA_HINT_DEFAULT_0);
   psDescriptor->addPort
     (LADSPA_PORT_OUTPUT | LADSPA_PORT_AUDIO,
      "Output (W)");
@@ -699,7 +702,7 @@ initialise_ambisonic() {
      LADSPA_PROPERTY_HARD_RT_CAPABLE,
      "Ambisonic Encoder (FMH-Format)",
      CMT_MAKER("Richard W.E. Furse"),
-     CMT_COPYRIGHT("2000", "Richard W.E. Furse"),
+     CMT_COPYRIGHT("2000-2002", "Richard W.E. Furse"),
      NULL,
      CMT_Instantiate<FMHFormatEncoder>,
      NULL,
@@ -712,13 +715,16 @@ initialise_ambisonic() {
      "Input");
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
-     "Sound Source X Coordinate");
+     "Sound Source X Coordinate",
+     LADSPA_HINT_DEFAULT_1);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
-     "Sound Source Y Coordinate");
+     "Sound Source Y Coordinate",
+     LADSPA_HINT_DEFAULT_0);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
-     "Sound Source Z Coordinate");
+     "Sound Source Z Coordinate",
+     LADSPA_HINT_DEFAULT_0);
   psDescriptor->addPort
     (LADSPA_PORT_OUTPUT | LADSPA_PORT_AUDIO,
      "Output (W)");
@@ -1002,7 +1008,7 @@ initialise_ambisonic() {
      LADSPA_PROPERTY_HARD_RT_CAPABLE,
      "Ambisonic Rotation (B-Format, Horizontal)",
      CMT_MAKER("Richard W.E. Furse"),
-     CMT_COPYRIGHT("2000", "Richard W.E. Furse"),
+     CMT_COPYRIGHT("2000-2002", "Richard W.E. Furse"),
      NULL,
      CMT_Instantiate<BFormatRotation>,
      NULL,
@@ -1013,7 +1019,9 @@ initialise_ambisonic() {
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Angle of Rotation (Degrees Anticlockwise)",
-     LADSPA_HINT_BOUNDED_BELOW | LADSPA_HINT_BOUNDED_ABOVE,
+     (LADSPA_HINT_BOUNDED_BELOW
+      | LADSPA_HINT_BOUNDED_ABOVE
+      | LADSPA_HINT_DEFAULT_HIGH),
      -180,
      180);
   psDescriptor->addPort
@@ -1048,7 +1056,7 @@ initialise_ambisonic() {
      LADSPA_PROPERTY_HARD_RT_CAPABLE,
      "Ambisonic Rotation (FMH-Format, Horizontal)",
      CMT_MAKER("Richard W.E. Furse"),
-     CMT_COPYRIGHT("2000", "Richard W.E. Furse"),
+     CMT_COPYRIGHT("2000-2002", "Richard W.E. Furse"),
      NULL,
      CMT_Instantiate<FMHFormatRotation>,
      NULL,
@@ -1059,7 +1067,9 @@ initialise_ambisonic() {
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Angle of Rotation (Degrees Anticlockwise)",
-     LADSPA_HINT_BOUNDED_BELOW | LADSPA_HINT_BOUNDED_ABOVE,
+     (LADSPA_HINT_BOUNDED_BELOW 
+      | LADSPA_HINT_BOUNDED_ABOVE
+      | LADSPA_HINT_DEFAULT_HIGH),
      -180,
      180);
   psDescriptor->addPort

@@ -1,7 +1,7 @@
 /* cmt.cpp
 
    Computer Music Toolkit - a library of LADSPA plugins. Copyright (C)
-   2000 Richard W.E. Furse. The author may be contacted at
+   2000-2002 Richard W.E. Furse. The author may be contacted at
    richard@muse.demon.co.uk.
 
    This library is free software; you can redistribute it and/or
@@ -115,9 +115,9 @@ typedef char * char_ptr;
 void CMT_Descriptor::
 addPort(LADSPA_PortDescriptor          iPortDescriptor,
 	const char *                   pcPortName,
-	LADSPA_PortRangeHintDescriptor iHintDescriptor = 0,
-	LADSPA_Data                    fLowerBound = 0,
-	LADSPA_Data                    fUpperBound = 0) {
+	LADSPA_PortRangeHintDescriptor iHintDescriptor,
+	LADSPA_Data                    fLowerBound,
+	LADSPA_Data                    fUpperBound) {
 
   unsigned long lOldPortCount = PortCount;
   unsigned long lNewPortCount = PortCount + 1;

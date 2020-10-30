@@ -1,7 +1,7 @@
 /* delay.cpp
 
    Computer Music Toolkit - a library of LADSPA plugins. Copyright (C)
-   2000 Richard W.E. Furse. The author may be contacted at
+   2000-2002 Richard W.E. Furse. The author may be contacted at
    richard@muse.demon.co.uk.
 
    This library is free software; you can redistribute it and/or
@@ -299,7 +299,7 @@ initialise_delay() {
 	 LADSPA_PROPERTY_HARD_RT_CAPABLE,
 	 acName,
 	 CMT_MAKER("Richard W.E. Furse"),
-	 CMT_COPYRIGHT("2000", "Richard W.E. Furse"),
+	 CMT_COPYRIGHT("2000-2002", "Richard W.E. Furse"),
 	 NULL,
 	 afInstantiateFunctions[lDelayLengthIndex],
 	 activateDelayLine,
@@ -311,13 +311,17 @@ initialise_delay() {
       psDescriptor->addPort
 	(LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
 	 "Delay (Seconds)",
-	 LADSPA_HINT_BOUNDED_BELOW | LADSPA_HINT_BOUNDED_ABOVE,
+	 (LADSPA_HINT_BOUNDED_BELOW 
+	  | LADSPA_HINT_BOUNDED_ABOVE
+	  | LADSPA_HINT_DEFAULT_1),
 	 0,
 	 afMaximumDelays[lDelayLengthIndex]);
       psDescriptor->addPort
 	(LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
 	 "Dry/Wet Balance",
-	 LADSPA_HINT_BOUNDED_BELOW | LADSPA_HINT_BOUNDED_ABOVE,
+	 (LADSPA_HINT_BOUNDED_BELOW 
+	  | LADSPA_HINT_BOUNDED_ABOVE
+	  | LADSPA_HINT_DEFAULT_MIDDLE),
 	 0,
 	 1);
       psDescriptor->addPort
@@ -331,7 +335,9 @@ initialise_delay() {
 	psDescriptor->addPort
 	  (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
 	   "Feedback",
-	   LADSPA_HINT_BOUNDED_BELOW | LADSPA_HINT_BOUNDED_ABOVE,
+	   (LADSPA_HINT_BOUNDED_BELOW 
+	    | LADSPA_HINT_BOUNDED_ABOVE
+	    | LADSPA_HINT_DEFAULT_HIGH),
 	   -1,
 	   1);
 

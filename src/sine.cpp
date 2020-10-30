@@ -1,7 +1,7 @@
 /* sine.cpp
 
    Computer Music Toolkit - a library of LADSPA plugins. Copyright (C)
-   2000 Richard W.E. Furse. The author may be contacted at
+   2000-2002 Richard W.E. Furse. The author may be contacted at
    richard@muse.demon.co.uk.
 
    This library is free software; you can redistribute it and/or
@@ -249,7 +249,7 @@ initialise_sine() {
        LADSPA_PROPERTY_HARD_RT_CAPABLE,
        apcNames[lPluginIndex],
        CMT_MAKER("Richard W.E. Furse"),
-       CMT_COPYRIGHT("2000", "Richard W.E. Furse"),
+       CMT_COPYRIGHT("2000-2002", "Richard W.E. Furse"),
        NULL,
        CMT_Instantiate<SineOscillator>,
        activateSineOscillator,
@@ -261,14 +261,20 @@ initialise_sine() {
     psDescriptor->addPort
       (piFrequencyPortProperties[lPluginIndex],
        "Frequency",
-       (LADSPA_HINT_BOUNDED_BELOW | LADSPA_HINT_BOUNDED_ABOVE
-	| LADSPA_HINT_SAMPLE_RATE | LADSPA_HINT_LOGARITHMIC),
+       (LADSPA_HINT_BOUNDED_BELOW
+	| LADSPA_HINT_BOUNDED_ABOVE
+	| LADSPA_HINT_SAMPLE_RATE 
+	| LADSPA_HINT_LOGARITHMIC
+	| LADSPA_HINT_DEFAULT_440),
        0, 
        0.5);
     psDescriptor->addPort
       (piAmplitudePortProperties[lPluginIndex],
        "Amplitude",
-       LADSPA_HINT_BOUNDED_BELOW | LADSPA_HINT_LOGARITHMIC,
+       (LADSPA_HINT_BOUNDED_BELOW 
+	| LADSPA_HINT_LOGARITHMIC
+	| LADSPA_HINT_DEFAULT_1),
+       0,
        0);
     psDescriptor->addPort
       (LADSPA_PORT_OUTPUT | LADSPA_PORT_AUDIO,

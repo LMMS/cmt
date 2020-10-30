@@ -1,10 +1,10 @@
 /* freeverb.cpp
 
    Computer Music Toolkit - a library of LADSPA plugins. Copyright (C)
-   2000 Richard W.E. Furse. Freeverb is also Copyright (C) 2000
+   2000-2002 Richard W.E. Furse. Freeverb is also Copyright (C) 2000
    Jezar. Richard may be contacted at richard@muse.demon.co.uk. [V1
    Ported to LADSPA 15/7/2000 Richard W.E. Furse, V3 ported to CMT
-   4/11/2000.]   
+   4/11/2000.]
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public Licence as
@@ -46,6 +46,7 @@ enum {
   FV_Width,
 
   FV_NumPorts
+
 };
 
 /*****************************************************************************/
@@ -143,12 +144,16 @@ initialise_freeverb3() {
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Freeze Mode",
-     LADSPA_HINT_TOGGLED);
+     (LADSPA_HINT_TOGGLED 
+      | LADSPA_HINT_DEFAULT_0),
+     0,
+     0);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Room Size", 
      (LADSPA_HINT_BOUNDED_BELOW
-      | LADSPA_HINT_BOUNDED_ABOVE), 
+      | LADSPA_HINT_BOUNDED_ABOVE
+      | LADSPA_HINT_DEFAULT_MIDDLE), 
      0,
      1);
   psDescriptor->addPort
@@ -156,7 +161,8 @@ initialise_freeverb3() {
      "Damping",
      (LADSPA_HINT_LOGARITHMIC 
       | LADSPA_HINT_BOUNDED_BELOW 
-      | LADSPA_HINT_BOUNDED_ABOVE), 
+      | LADSPA_HINT_BOUNDED_ABOVE
+      | LADSPA_HINT_DEFAULT_MIDDLE), 
      0,
      1);
   psDescriptor->addPort
@@ -164,7 +170,8 @@ initialise_freeverb3() {
      "Wet Level",
      (LADSPA_HINT_LOGARITHMIC 
       | LADSPA_HINT_BOUNDED_BELOW 
-      | LADSPA_HINT_BOUNDED_ABOVE), 
+      | LADSPA_HINT_BOUNDED_ABOVE
+      | LADSPA_HINT_DEFAULT_MIDDLE), 
      0,
      1);
   psDescriptor->addPort
@@ -172,14 +179,16 @@ initialise_freeverb3() {
      "Dry Level", 
      (LADSPA_HINT_LOGARITHMIC 
       | LADSPA_HINT_BOUNDED_BELOW 
-      | LADSPA_HINT_BOUNDED_ABOVE), 
+      | LADSPA_HINT_BOUNDED_ABOVE
+      | LADSPA_HINT_DEFAULT_MAXIMUM), 
      0,
      1);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Width", 
      (LADSPA_HINT_BOUNDED_BELOW 
-      | LADSPA_HINT_BOUNDED_ABOVE), 
+      | LADSPA_HINT_BOUNDED_ABOVE
+      | LADSPA_HINT_DEFAULT_MIDDLE), 
      0,
      1);
 

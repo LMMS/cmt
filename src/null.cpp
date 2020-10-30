@@ -176,7 +176,7 @@ initialise_null() {
     (1085,
      "null_co",
      LADSPA_PROPERTY_HARD_RT_CAPABLE,
-     "Null (Control Input)",
+     "Null (Control Output)",
      CMT_MAKER("Richard W.E. Furse"),
      CMT_COPYRIGHT("2000", "Richard W.E. Furse"),
      NULL,

@@ -88,7 +88,7 @@ public:
         syndrum->spring_vel = *syndrum->m_ppfPorts[PORT_VELOCITY];
         syndrum->env = *syndrum->m_ppfPorts[PORT_VELOCITY];
       }
-    syndrum->last_trigger = 0;
+    syndrum->last_trigger = trigger;
 
     factor = 2.0 * PI / syndrum->sample_rate;
     freq_shift = *syndrum->m_ppfPorts[PORT_FREQ] *

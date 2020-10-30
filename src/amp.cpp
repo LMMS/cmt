@@ -1,7 +1,7 @@
 /* amp.cpp
 
    Computer Music Toolkit - a library of LADSPA plugins. Copyright (C)
-   2000 Richard W.E. Furse. The author may be contacted at
+   2000-2002 Richard W.E. Furse. The author may be contacted at
    richard@muse.demon.co.uk.
 
    This library is free software; you can redistribute it and/or
@@ -120,7 +120,7 @@ initialise_amp() {
      LADSPA_PROPERTY_HARD_RT_CAPABLE,
      "Amplifier (Mono)",
      CMT_MAKER("Richard W.E. Furse"),
-     CMT_COPYRIGHT("2000", "Richard W.E. Furse"),
+     CMT_COPYRIGHT("2000-2002", "Richard W.E. Furse"),
      NULL,
      CMT_Instantiate<MonoAmplifier>,
      NULL,
@@ -131,7 +131,10 @@ initialise_amp() {
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Gain",
-     LADSPA_HINT_BOUNDED_BELOW | LADSPA_HINT_LOGARITHMIC,
+     (LADSPA_HINT_BOUNDED_BELOW 
+      | LADSPA_HINT_LOGARITHMIC
+      | LADSPA_HINT_DEFAULT_1),
+     0,
      0);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_AUDIO,
@@ -147,7 +150,7 @@ initialise_amp() {
      LADSPA_PROPERTY_HARD_RT_CAPABLE,
      "Amplifier (Stereo)",
      CMT_MAKER("Richard W.E. Furse"),
-     CMT_COPYRIGHT("2000", "Richard W.E. Furse"),
+     CMT_COPYRIGHT("2000-2002", "Richard W.E. Furse"),
      NULL,
      CMT_Instantiate<StereoAmplifier>,
      NULL,
@@ -158,7 +161,10 @@ initialise_amp() {
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_CONTROL,
      "Gain",
-     LADSPA_HINT_BOUNDED_BELOW | LADSPA_HINT_LOGARITHMIC,
+     (LADSPA_HINT_BOUNDED_BELOW 
+      | LADSPA_HINT_LOGARITHMIC
+      | LADSPA_HINT_DEFAULT_1),
+     0,
      0);
   psDescriptor->addPort
     (LADSPA_PORT_INPUT | LADSPA_PORT_AUDIO,

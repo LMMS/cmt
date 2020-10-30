@@ -41,15 +41,24 @@ void initialise_dynamic();
 void initialise_filter();
 void initialise_freeverb3();
 void initialise_grain();
+void initialise_lofi();
 void initialise_mixer();
 void initialise_noise();
 void initialise_null();
 void initialise_organ();
 void initialise_peak();
+void initialise_phasemod();
 void initialise_sine();
 void initialise_syndrum();
 void initialise_vcf303();
 void initialise_wshape_sine();
+namespace hardgate               { void initialise(); }
+namespace disintegrator          { void initialise(); }
+namespace pink                   { void initialise(); }
+namespace pink_full              { void initialise(); }
+namespace pink_sh                { void initialise(); }
+namespace sledgehammer           { void initialise(); }
+namespace logistic               { void initialise(); }
 
 /** This function should initialise all modules in the library. This
     will lead to all plugin descriptors being registered. If you write
@@ -68,15 +77,24 @@ initialise_modules() {
   initialise_filter();
   initialise_freeverb3();
   initialise_grain();
+  initialise_lofi();
   initialise_mixer();
   initialise_noise();
   initialise_null();
   initialise_organ();
   initialise_peak();
+  initialise_phasemod();
   initialise_sine();
   initialise_syndrum();
   initialise_vcf303();
   initialise_wshape_sine();
+  hardgate::initialise();
+  disintegrator::initialise();
+  pink::initialise();
+  pink_full::initialise();
+  pink_sh::initialise();
+  sledgehammer::initialise();
+  logistic::initialise();
 }
 
 /*****************************************************************************/
