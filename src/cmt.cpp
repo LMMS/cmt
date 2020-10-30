@@ -29,6 +29,15 @@
 
 /*****************************************************************************/
 
+inline char * 
+localStrdup(const char * input) {
+  char * output = new char[strlen(input) + 1];
+  strcpy(output, input);
+  return output;
+}
+
+/*****************************************************************************/
+
 CMT_Descriptor::
 ~CMT_Descriptor() {
   if (Label)
@@ -89,11 +98,11 @@ CMT_Descriptor(unsigned long                       lUniqueID,
 	       LADSPA_Deactivate_Function          fDeactivate) {
 
   UniqueID = lUniqueID;
-  Label = strdup(pcLabel);
+  Label = localStrdup(pcLabel);
   Properties = iProperties;
-  Name = strdup(pcName);
-  Maker = strdup(pcMaker);
-  Copyright = strdup(pcCopyright);
+  Name = localStrdup(pcName);
+  Maker = localStrdup(pcMaker);
+  Copyright = localStrdup(pcCopyright);
   PortCount = 0;
   ImplementationData = poImplementationData;
 
@@ -158,7 +167,7 @@ addPort(LADSPA_PortDescriptor          iPortDescriptor,
   }
 
   piNewPortDescriptors[lOldPortCount] = iPortDescriptor;
-  ppcNewPortNames[lOldPortCount] = strdup(pcPortName);
+  ppcNewPortNames[lOldPortCount] = localStrdup(pcPortName);
   psNewPortRangeHints[lOldPortCount].HintDescriptor = iHintDescriptor;
   psNewPortRangeHints[lOldPortCount].LowerBound = fLowerBound;
   psNewPortRangeHints[lOldPortCount].UpperBound = fUpperBound;

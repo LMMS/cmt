@@ -2,18 +2,16 @@
 #
 # INSTALLATION DIRECTORIES
 #
-# Change this if you want to install somewhere else. In particularly
-# you may wish to remove the middle "local/" part.
+# Change this if you want to install somewhere else.
 
-INSTALL_PLUGINS_DIR	=	/usr/local/lib/ladspa/
+INSTALL_PLUGINS_DIR	=	/usr/lib/ladspa/
 
 ###############################################################################
 #
 # GENERAL
 #
 
-INCLUDES	=	-I/usr/local/include/
-CFLAGS		=	$(INCLUDES) -Wall -Werror -O3 -fPIC
+CFLAGS		=	$(INCLUDES) -Wall -O3 -fPIC
 CXXFLAGS	=	$(CFLAGS)
 PLUGIN_LIB	=	../plugins/cmt.so
 
