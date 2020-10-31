@@ -11,10 +11,13 @@
 #include "allpass.h"
 #include "tuning.h"
 
+// enough for largest possible samplerate, 8 * 96000
+const int maxsampleratio = 18;
+
 class revmodel
 {
 public:
-					revmodel();
+					revmodel(float sampleratio);
 			void	mute();
 			void	processmix(float *inputL, float *inputR, float *outputL, float *outputR, long numsamples, int skip);
 			void	processreplace(float *inputL, float *inputR, float *outputL, float *outputR, long numsamples, int skip);
@@ -54,32 +57,32 @@ private:
 	allpass	allpassR[numallpasses];
 
 	// Buffers for the combs
-	float	bufcombL1[combtuningL1];
-	float	bufcombR1[combtuningR1];
-	float	bufcombL2[combtuningL2];
-	float	bufcombR2[combtuningR2];
-	float	bufcombL3[combtuningL3];
-	float	bufcombR3[combtuningR3];
-	float	bufcombL4[combtuningL4];
-	float	bufcombR4[combtuningR4];
-	float	bufcombL5[combtuningL5];
-	float	bufcombR5[combtuningR5];
-	float	bufcombL6[combtuningL6];
-	float	bufcombR6[combtuningR6];
-	float	bufcombL7[combtuningL7];
-	float	bufcombR7[combtuningR7];
-	float	bufcombL8[combtuningL8];
-	float	bufcombR8[combtuningR8];
+	float	bufcombL1[combtuningL1 * maxsampleratio];
+	float	bufcombR1[combtuningR1 * maxsampleratio];
+	float	bufcombL2[combtuningL2 * maxsampleratio];
+	float	bufcombR2[combtuningR2 * maxsampleratio];
+	float	bufcombL3[combtuningL3 * maxsampleratio];
+	float	bufcombR3[combtuningR3 * maxsampleratio];
+	float	bufcombL4[combtuningL4 * maxsampleratio];
+	float	bufcombR4[combtuningR4 * maxsampleratio];
+	float	bufcombL5[combtuningL5 * maxsampleratio];
+	float	bufcombR5[combtuningR5 * maxsampleratio];
+	float	bufcombL6[combtuningL6 * maxsampleratio];
+	float	bufcombR6[combtuningR6 * maxsampleratio];
+	float	bufcombL7[combtuningL7 * maxsampleratio];
+	float	bufcombR7[combtuningR7 * maxsampleratio];
+	float	bufcombL8[combtuningL8 * maxsampleratio];
+	float	bufcombR8[combtuningR8 * maxsampleratio];
 
 	// Buffers for the allpasses
-	float	bufallpassL1[allpasstuningL1];
-	float	bufallpassR1[allpasstuningR1];
-	float	bufallpassL2[allpasstuningL2];
-	float	bufallpassR2[allpasstuningR2];
-	float	bufallpassL3[allpasstuningL3];
-	float	bufallpassR3[allpasstuningR3];
-	float	bufallpassL4[allpasstuningL4];
-	float	bufallpassR4[allpasstuningR4];
+	float	bufallpassL1[allpasstuningL1 * maxsampleratio];
+	float	bufallpassR1[allpasstuningR1 * maxsampleratio];
+	float	bufallpassL2[allpasstuningL2 * maxsampleratio];
+	float	bufallpassR2[allpasstuningR2 * maxsampleratio];
+	float	bufallpassL3[allpasstuningL3 * maxsampleratio];
+	float	bufallpassR3[allpasstuningR3 * maxsampleratio];
+	float	bufallpassL4[allpasstuningL4 * maxsampleratio];
+	float	bufallpassR4[allpasstuningR4 * maxsampleratio];
 };
 
 #endif//_revmodel_
