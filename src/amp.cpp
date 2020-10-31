@@ -21,7 +21,7 @@
 
 /*****************************************************************************/
 
-#include <stdlib.h>
+#include <cstdlib>
 
 /*****************************************************************************/
 
@@ -32,6 +32,9 @@
 #define AMP_CONTROL 0
 #define AMP_INPUT1  1
 #define AMP_OUTPUT1 2
+
+static void runMonoAmplifier(LADSPA_Handle Instance,
+                             unsigned long SampleCount);
 
 /** This plugin applies a gain to a mono signal. */
 class MonoAmplifier : public CMT_PluginInstance {
@@ -53,6 +56,9 @@ public:
 #define AMP_INPUT2  3
 #define AMP_OUTPUT2 4
 
+static void runStereoAmplifier(LADSPA_Handle Instance,
+                               unsigned long SampleCount);
+
 /** This plugin applies a gain to a stereo signal. */
 class StereoAmplifier : public CMT_PluginInstance {
 public:
@@ -63,12 +69,13 @@ public:
   }
 
   friend void runStereoAmplifier(LADSPA_Handle Instance,
-				   unsigned long SampleCount);
+                                 unsigned long SampleCount);
+  
 };
 
 /*****************************************************************************/
 
-void 
+static void 
 runMonoAmplifier(LADSPA_Handle Instance,
 		   unsigned long SampleCount) {
   
@@ -86,7 +93,7 @@ runMonoAmplifier(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runStereoAmplifier(LADSPA_Handle Instance,
 		     unsigned long SampleCount) {
 

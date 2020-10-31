@@ -21,9 +21,9 @@
 
 /*****************************************************************************/
 
-#include <math.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cmath>
+#include <cstdlib>
+#include <cstring>
 
 /*****************************************************************************/
 
@@ -37,6 +37,16 @@
 
 #define ET_FILTER 2
 
+static void activateTracker(void * pvHandle);
+static void runEnvelopeTracker_Peak(LADSPA_Handle Instance,
+                                    unsigned long SampleCount);
+static void runEnvelopeTracker_RMS(LADSPA_Handle Instance,
+                                   unsigned long SampleCount);
+static void runEnvelopeTracker_MaxPeak(LADSPA_Handle Instance,
+                                       unsigned long SampleCount);
+static void runEnvelopeTracker_MaxRMS(LADSPA_Handle Instance,
+                                      unsigned long SampleCount);
+  
 /** This class is used to provide plugins that perform envelope
     tracking. Peak and RMS are supported and smoothed or smoothed
     maximum approaches are available. */
@@ -66,6 +76,10 @@ public:
   
 };
 
+static void activatePeakMonitor(void * pvHandle);
+static void runPeakMonitor(LADSPA_Handle Instance,
+                           unsigned long SampleCount);
+  
 /** This class provides a simple peak monitor that records the highest
     signal peak present ever. It can be useful to identify clipping
     cases. */
@@ -89,21 +103,21 @@ public:
 
 /*****************************************************************************/
 
-void 
+static void 
 activateTracker(void * pvHandle) {
   ((Tracker *)pvHandle)->m_fState = 0;
 }
 
 /*****************************************************************************/
 
-void 
+static void 
 activatePeakMonitor(void * pvHandle) {
   ((PeakMonitor *)pvHandle)->m_fState = 0;
 }
 
 /*****************************************************************************/
 
-void 
+static void 
 runEnvelopeTracker_Peak(LADSPA_Handle Instance,
 			unsigned long SampleCount) {
   Tracker * poProcessor = (Tracker *)Instance;
@@ -123,7 +137,7 @@ runEnvelopeTracker_Peak(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runEnvelopeTracker_RMS(LADSPA_Handle Instance,
 		       unsigned long SampleCount) {
   Tracker * poProcessor = (Tracker *)Instance;
@@ -143,7 +157,7 @@ runEnvelopeTracker_RMS(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runEnvelopeTracker_MaxPeak(LADSPA_Handle Instance,
 			   unsigned long SampleCount) {
   Tracker * poProcessor = (Tracker *)Instance;
@@ -169,7 +183,7 @@ runEnvelopeTracker_MaxPeak(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runEnvelopeTracker_MaxRMS(LADSPA_Handle Instance,
 			  unsigned long SampleCount) {
   Tracker * poProcessor = (Tracker *)Instance;
@@ -195,7 +209,7 @@ runEnvelopeTracker_MaxRMS(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runPeakMonitor(LADSPA_Handle Instance,
 	       unsigned long SampleCount) {
   PeakMonitor * poProcessor = (PeakMonitor *)Instance;

@@ -25,7 +25,7 @@
 
 /*****************************************************************************/
 
-#include <stdlib.h>
+#include <cstdlib>
 
 /*****************************************************************************/
 
@@ -44,6 +44,10 @@ namespace pink {
 	n_ports          = 2
     };
     
+    static void activate(LADSPA_Handle instance);
+    static void run_interpolated_audio(LADSPA_Handle instance,
+                                       unsigned long sample_count);
+	
     /** This plugin generates a signal which approximates the effect of low-pass
 	filtered pink noise, which makes for an interesting randomly changing 
 	control parameter.  It should probably use sinc interpolation, but in fact
@@ -82,7 +86,7 @@ namespace pink {
 	
     };
     
-    void activate(LADSPA_Handle instance) {
+    static void activate(LADSPA_Handle instance) {
 	Plugin *pp = (Plugin *) instance;
 	Plugin &p  = *pp;
 	
@@ -94,9 +98,9 @@ namespace pink {
 	p.multiplier = 1;
     }
 
-    inline float thirdInterp(const float &x,
-			     const float &L1,const float &L0,
-			     const float &H0,const float &H1) {
+    static inline float thirdInterp(const float &x,
+                                    const float &L1,const float &L0,
+                                    const float &H0,const float &H1) {
       return 
 	L0 +
 	.5f*
@@ -107,8 +111,8 @@ namespace pink {
 		     x*((H0 - L0)*6 + (L1 - H1)*2 )))));
     }
 
-    void run_interpolated_audio(LADSPA_Handle instance,
-				unsigned long sample_count) {
+    static void run_interpolated_audio(LADSPA_Handle instance,
+                                       unsigned long sample_count) {
 
 	Plugin *pp = (Plugin *) instance;
 	Plugin &p  = *pp;
@@ -148,8 +152,9 @@ namespace pink {
 	}
     }
 
-    void run_interpolated_control(LADSPA_Handle instance,
-				  unsigned long sample_count) {
+  /* Not in use; see below.
+    static void run_interpolated_control(LADSPA_Handle instance,
+                                         unsigned long sample_count) {
 
 	Plugin *pp = (Plugin *) instance;
  	Plugin &p  = *pp;
@@ -174,6 +179,7 @@ namespace pink {
 	}
 	*(out)=value;
     }
+  */
 
     void initialise() {
 	CMT_Descriptor * d = new CMT_Descriptor

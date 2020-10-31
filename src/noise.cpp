@@ -21,7 +21,7 @@
 
 /*****************************************************************************/
 
-#include <stdlib.h>
+#include <cstdlib>
 
 /*****************************************************************************/
 
@@ -33,6 +33,13 @@
 
 #define NOISE_AMPLITUDE 0
 #define NOISE_OUTPUT    1
+
+static void runWhiteNoise(LADSPA_Handle Instance,
+                          unsigned long SampleCount);
+static void runWhiteNoiseAdding(LADSPA_Handle Instance,
+                                unsigned long SampleCount);
+static void setWhiteNoiseRunAddingGain(LADSPA_Handle Instance,
+                                       LADSPA_Data   Gain);
 
 /** Plugin that provides white noise output. This is provided by
     calling rand() repeatedly. */
@@ -59,7 +66,7 @@ public:
 
 /*****************************************************************************/
 
-void 
+static void 
 runWhiteNoise(LADSPA_Handle Instance,
 	      unsigned long SampleCount) {
   
@@ -76,7 +83,7 @@ runWhiteNoise(LADSPA_Handle Instance,
     *(pfOutput++) = rand() * fScalar - fAmplitude;
 }
 
-void 
+static void 
 runWhiteNoiseAdding(LADSPA_Handle Instance,
 		    unsigned long SampleCount) {
   
@@ -96,7 +103,7 @@ runWhiteNoiseAdding(LADSPA_Handle Instance,
 
 }
 
-void 
+static void 
 setWhiteNoiseRunAddingGain(LADSPA_Handle Instance,
 			   LADSPA_Data   Gain) {
 }

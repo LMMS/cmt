@@ -21,8 +21,8 @@
 
 /*****************************************************************************/
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
 
 /*****************************************************************************/
 
@@ -36,12 +36,12 @@
 
 /*****************************************************************************/
 
-LADSPA_Data * g_pfSineTable = NULL;
-LADSPA_Data g_fPhaseStepBase = 0;
+static LADSPA_Data * g_pfSineTable = NULL;
+static LADSPA_Data g_fPhaseStepBase = 0;
 
 /*****************************************************************************/
 
-void
+static void
 initialise_sine_wavetable() {
   if (g_pfSineTable == NULL) {
     long lTableSize = (1 << SINE_TABLE_BITS);
@@ -61,6 +61,16 @@ initialise_sine_wavetable() {
 #define OSC_FREQUENCY 0
 #define OSC_AMPLITUDE 1
 #define OSC_OUTPUT    2
+
+static void activateSineOscillator(void * pvHandle);
+static void runSineOscillator_FreqAudio_AmpAudio(LADSPA_Handle Instance,
+                                                 unsigned long SampleCount);
+static void runSineOscillator_FreqAudio_AmpCtrl(LADSPA_Handle Instance,
+                                                unsigned long SampleCount);
+static void runSineOscillator_FreqCtrl_AmpAudio(LADSPA_Handle Instance,
+                                                unsigned long SampleCount);
+static void runSineOscillator_FreqCtrl_AmpCtrl(LADSPA_Handle Instance,
+                                               unsigned long SampleCount);
 
 /* This class provides sine wavetable oscillator
    plugins. Band-limiting to avoid aliasing is trivial because of the
@@ -114,14 +124,14 @@ public:
 
 /*****************************************************************************/
 
-void 
+static void 
 activateSineOscillator(void * pvHandle) {
   ((SineOscillator *)pvHandle)->m_lPhase = 0;
 }
 
 /*****************************************************************************/
 
-void 
+static void 
 runSineOscillator_FreqAudio_AmpAudio(LADSPA_Handle Instance,
 				     unsigned long SampleCount) {
   SineOscillator * poSineOscillator = (SineOscillator *)Instance;
@@ -143,7 +153,7 @@ runSineOscillator_FreqAudio_AmpAudio(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runSineOscillator_FreqAudio_AmpCtrl(LADSPA_Handle Instance,
 				    unsigned long SampleCount) {
   SineOscillator * poSineOscillator = (SineOscillator *)Instance;
@@ -165,7 +175,7 @@ runSineOscillator_FreqAudio_AmpCtrl(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void
+static void
 runSineOscillator_FreqCtrl_AmpAudio(LADSPA_Handle Instance,
 				    unsigned long SampleCount) {
   SineOscillator * poSineOscillator = (SineOscillator *)Instance;
@@ -184,7 +194,7 @@ runSineOscillator_FreqCtrl_AmpAudio(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runSineOscillator_FreqCtrl_AmpCtrl(LADSPA_Handle Instance,
 				   unsigned long SampleCount) {
   SineOscillator * poSineOscillator = (SineOscillator *)Instance;

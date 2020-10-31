@@ -24,8 +24,8 @@
 
 /*****************************************************************************/
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
 #include "cmt.h"
 
 #define PORT_OUT         0

@@ -26,7 +26,7 @@
 
 /*****************************************************************************/
 
-#include <stdlib.h>
+#include <cstdlib>
 
 /*****************************************************************************/
 
@@ -45,6 +45,10 @@ namespace pink_sh {
 	n_ports          = 2
     };
     
+    static void activate(LADSPA_Handle instance);
+    static void run(LADSPA_Handle instance,
+                    unsigned long sample_count);	
+
     /** This plugin generates a signal which approximates stepped 
 	(sample-and-hold like) pink noise, using the
 	Voss-McCartney algorithm described at www.firstpr.com.au/dsp/pink-noise/ */
@@ -70,7 +74,7 @@ namespace pink_sh {
 			unsigned long sample_count);	
     };
     
-    void activate(LADSPA_Handle instance) {
+    static void activate(LADSPA_Handle instance) {
 	Plugin *pp = (Plugin *) instance;
 	Plugin &p  = *pp;
 	
@@ -78,8 +82,8 @@ namespace pink_sh {
 	p.counter = 0;
     }
 
-    void run(LADSPA_Handle instance,
-	     unsigned long sample_count) {
+    static void run(LADSPA_Handle instance,
+                    unsigned long sample_count) {
 
 	Plugin *pp = (Plugin *) instance;
 	Plugin &p  = *pp;

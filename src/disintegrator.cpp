@@ -23,7 +23,7 @@
 
 /*****************************************************************************/
 
-#include <stdlib.h>
+#include <cstdlib>
 
 /*****************************************************************************/
 
@@ -41,7 +41,10 @@ namespace disintegrator {
 	port_output      = 3,
 	n_ports          = 4
     };
-    
+
+    static void set_run_adding_gain(LADSPA_Handle instance,
+                                    LADSPA_Data new_gain);
+
 /** This plugin multiplies random half-waveforms by port_multiplier,
     with probability port_probability */
     class Plugin : public CMT_PluginInstance {
@@ -64,8 +67,8 @@ namespace disintegrator {
     };
 
     template<OutputFunction write_output>
-    void run(LADSPA_Handle instance,
-	     unsigned long sample_count) {
+    static void run(LADSPA_Handle instance,
+	            unsigned long sample_count) {
 	
 	Plugin *pp = (Plugin *) instance;
 	Plugin &p  = *pp;
@@ -89,7 +92,7 @@ namespace disintegrator {
 	}
     }
     
-    void set_run_adding_gain(LADSPA_Handle instance,
+    static void set_run_adding_gain(LADSPA_Handle instance,
 			     LADSPA_Data new_gain) {
 	((Plugin *) instance)->run_adding_gain = new_gain;
     }

@@ -21,8 +21,8 @@
 
 /*****************************************************************************/
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 /*****************************************************************************/
 
@@ -35,6 +35,9 @@
 #define MIXER_INPUT1 0
 #define MIXER_INPUT2 1
 #define MIXER_OUTPUT 2
+
+static void runSimpleMixer(LADSPA_Handle Instance,
+                           unsigned long SampleCount);
 
 /** This plugin adds two signals together to produce a third. */
 class SimpleMixer : public CMT_PluginInstance {
@@ -52,7 +55,7 @@ public:
 
 /*****************************************************************************/
 
-void 
+static void 
 runSimpleMixer(LADSPA_Handle Instance,
 	       unsigned long SampleCount) {
   

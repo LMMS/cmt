@@ -27,9 +27,9 @@
 
 /*****************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 /*****************************************************************************/
 
@@ -54,6 +54,12 @@
 #define DL_OUTPUT       3
 /* Present only on feedback delays: */
 #define DL_FEEDBACK     4
+
+static void activateDelayLine(LADSPA_Handle Instance);
+static void runSimpleDelayLine(LADSPA_Handle Instance,
+                               unsigned long SampleCount);
+static void runFeedbackDelayLine(LADSPA_Handle Instance,
+                                 unsigned long SampleCount);
 
 /** This class is used to implement delay line plugins. Different
     maximum delay times are supported as are both echo and feedback
@@ -103,7 +109,7 @@ public:
 /*****************************************************************************/
 
 /* Initialise and activate a plugin instance. */
-void
+static void
 activateDelayLine(LADSPA_Handle Instance) {
 
   DelayLine * poDelayLine = (DelayLine *)Instance;
@@ -121,7 +127,7 @@ activateDelayLine(LADSPA_Handle Instance) {
 /*****************************************************************************/
 
 /* Run a delay line instance for a block of SampleCount samples. */
-void 
+static void 
 runSimpleDelayLine(LADSPA_Handle Instance,
 		   unsigned long SampleCount) {
   
@@ -171,7 +177,7 @@ runSimpleDelayLine(LADSPA_Handle Instance,
 /*****************************************************************************/
 
 /** Run a feedback delay line instance for a block of SampleCount samples. */
-void 
+static void 
 runFeedbackDelayLine(LADSPA_Handle Instance,
 		     unsigned long SampleCount) {
   
@@ -228,7 +234,8 @@ runFeedbackDelayLine(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-template <long lMaximumDelayMilliseconds> LADSPA_Handle 
+template <long lMaximumDelayMilliseconds>
+static LADSPA_Handle 
 CMT_Delay_Instantiate(const LADSPA_Descriptor * Descriptor,
 		      unsigned long             SampleRate) {
   return new DelayLine(SampleRate,

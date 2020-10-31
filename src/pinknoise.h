@@ -27,7 +27,7 @@
 #ifndef _PINKNOISE_H
 #define _PINKNOISE_H
 
-#include <stdlib.h>
+#include <cstdlib>
 
 typedef unsigned int CounterType;
 typedef float DataValue;

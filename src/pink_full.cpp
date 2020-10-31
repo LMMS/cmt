@@ -26,7 +26,7 @@
 
 /*****************************************************************************/
 
-#include <stdlib.h>
+#include <cstdlib>
 
 /*****************************************************************************/
 
@@ -45,7 +45,11 @@ namespace pink_full {
 	n_ports          = 1
     };
     
-    /** This plugin generates a signal which approximates pink noise, using the
+    static void activate(LADSPA_Handle instance);
+    static void run(LADSPA_Handle instance,
+                    unsigned long sample_count);	
+
+  /** This plugin generates a signal which approximates pink noise, using the
 	Voss-McCartney algorithm described at www.firstpr.com.au/dsp/pink-noise/ */
     class Plugin : public CMT_PluginInstance {
     private:
@@ -68,15 +72,15 @@ namespace pink_full {
 			unsigned long sample_count);	
     };
     
-    void activate(LADSPA_Handle instance) {
+    static void activate(LADSPA_Handle instance) {
 	Plugin *pp = (Plugin *) instance;
 	Plugin &p  = *pp;
 	
 	p.noise_source.reset();
     }
 
-    void run(LADSPA_Handle instance,
-	     unsigned long sample_count) {
+    static void run(LADSPA_Handle instance,
+                    unsigned long sample_count) {
 
 	Plugin *pp = (Plugin *) instance;
 	Plugin &p  = *pp;

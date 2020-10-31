@@ -26,8 +26,8 @@
 
 /*****************************************************************************/
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
 
 /*****************************************************************************/
 
@@ -48,6 +48,13 @@ namespace sledgehammer {
 	n_ports        = 6
     };
     
+    static void activate(LADSPA_Handle instance);
+    template<OutputFunction write_output>
+    static void run(LADSPA_Handle instance,
+	            unsigned long sample_count);
+    static void set_run_adding_gain(LADSPA_Handle instance,
+                                    LADSPA_Data new_gain);
+  
 /** This plugin imposes the dynamics of one sound onto another.
     It can be seen as a brutal compressor with a sidechain, or
     as a kind of one-band vocoder. */
@@ -70,7 +77,7 @@ namespace sledgehammer {
 					LADSPA_Data new_gain);
     };
 
-    void activate(LADSPA_Handle instance) {
+    static void activate(LADSPA_Handle instance) {
 	Plugin *pp = (Plugin *) instance;
 	Plugin &p  = *pp;
 
@@ -79,8 +86,8 @@ namespace sledgehammer {
     }
 
     template<OutputFunction write_output>
-    void run(LADSPA_Handle instance,
-	     unsigned long sample_count) {
+    static void run(LADSPA_Handle instance,
+	            unsigned long sample_count) {
 	
 	Plugin *pp = (Plugin *) instance;
 	Plugin &p  = *pp;
@@ -113,8 +120,8 @@ namespace sledgehammer {
 	}
     }
     
-    void set_run_adding_gain(LADSPA_Handle instance,
-			     LADSPA_Data new_gain) {
+    static void set_run_adding_gain(LADSPA_Handle instance,
+                                    LADSPA_Data new_gain) {
 	((Plugin *) instance)->run_adding_gain = new_gain;
     }
 

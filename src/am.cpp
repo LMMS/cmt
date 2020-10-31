@@ -21,8 +21,8 @@
 
 /*****************************************************************************/
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 /*****************************************************************************/
 
@@ -34,6 +34,9 @@
 #define AM_INPUT2 1
 #define AM_OUTPUT 2
 
+static void runAmplitudeModulator(LADSPA_Handle Instance,
+                                  unsigned long SampleCount);
+
 /** This plugin multiplies two signals together to produce a third. */
 class AmplitudeModulator : public CMT_PluginInstance {
 public:
@@ -44,15 +47,15 @@ public:
   }
 
   friend void runAmplitudeModulator(LADSPA_Handle Instance,
-			     unsigned long SAmplitudeModulatorpleCount);
+                                    unsigned long SampleCount);
 
 };
 
 /*****************************************************************************/
 
-void 
+static void 
 runAmplitudeModulator(LADSPA_Handle Instance,
-		      unsigned long SAmplitudeModulatorpleCount) {
+		      unsigned long SampleCount) {
   
   AmplitudeModulator * poAmplitudeModulator = (AmplitudeModulator *)Instance;
 
@@ -61,7 +64,7 @@ runAmplitudeModulator(LADSPA_Handle Instance,
   LADSPA_Data * pfOutput = poAmplitudeModulator->m_ppfPorts[AM_OUTPUT];
 
   for (unsigned long lSAmplitudeModulatorpleIndex = 0; 
-       lSAmplitudeModulatorpleIndex < SAmplitudeModulatorpleCount; 
+       lSAmplitudeModulatorpleIndex < SampleCount; 
        lSAmplitudeModulatorpleIndex++) 
     *(pfOutput++) = *(pfInput1++) * *(pfInput2++);
 }

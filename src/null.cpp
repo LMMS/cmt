@@ -21,8 +21,8 @@
 
 /*****************************************************************************/
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 /*****************************************************************************/
 
@@ -33,6 +33,13 @@
 /* The port numbers for the plugin: */
 
 #define NULL_PORT 0
+
+static void runNull_Nop(LADSPA_Handle Instance,
+                        unsigned long SampleCount);
+static void runNull_OutputAudio(LADSPA_Handle Instance,
+                                unsigned long SampleCount);
+static void runNull_OutputControl(LADSPA_Handle Instance,
+                                  unsigned long SampleCount);
 
 /** This plugin can be used to take care of unwanted connections in a
     host's plugin network by generating zero data and audio or
@@ -59,6 +66,11 @@ public:
 #define IDENTITY_INPUT 0
 #define IDENTITY_OUTPUT 1
 
+static void runIdentity_Audio(LADSPA_Handle Instance,
+                              unsigned long SampleCount);
+static void runIdentity_Control(LADSPA_Handle Instance,
+                                unsigned long SampleCount);
+
 /* This plugin passes its input to its output. There are audio and
    control varieties. */
 class IdentityPlugin : public CMT_PluginInstance {
@@ -78,7 +90,7 @@ public:
 
 /*****************************************************************************/
 
-void 
+static void 
 runNull_Nop(LADSPA_Handle Instance,
 	    unsigned long SampleCount) {
   /* Nothing to do. */
@@ -86,7 +98,7 @@ runNull_Nop(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runNull_OutputAudio(LADSPA_Handle Instance,
 		    unsigned long SampleCount) {
   NullPlugin * poPlugin = (NullPlugin *)Instance;
@@ -97,7 +109,7 @@ runNull_OutputAudio(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runNull_OutputControl(LADSPA_Handle Instance,
 		      unsigned long) {
   NullPlugin * poPlugin = (NullPlugin *)Instance;
@@ -106,7 +118,7 @@ runNull_OutputControl(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runIdentity_Audio(LADSPA_Handle Instance,
 		  unsigned long SampleCount) {
   IdentityPlugin * poPlugin = (IdentityPlugin *)Instance;
@@ -119,7 +131,7 @@ runIdentity_Audio(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runIdentity_Control(LADSPA_Handle Instance,
 		    unsigned long) {
   IdentityPlugin * poPlugin = (IdentityPlugin *)Instance;

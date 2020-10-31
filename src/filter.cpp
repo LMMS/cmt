@@ -21,8 +21,8 @@
 
 /*****************************************************************************/
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
 
 /*****************************************************************************/
 
@@ -33,6 +33,12 @@
 #define SF_CUTOFF  0
 #define SF_INPUT   1
 #define SF_OUTPUT  2
+
+static void activateOnePollFilter(LADSPA_Handle Instance);
+static void runOnePollLowPassFilter(LADSPA_Handle Instance,
+                                    unsigned long SampleCount);
+static void runOnePollHighPassFilter(LADSPA_Handle Instance,
+                                     unsigned long SampleCount);
 
 /** Instance data for the OnePoll filter (one-poll, low or high
     pass). We can get away with using this structure for both low- and
@@ -71,7 +77,7 @@ public:
 
 /*****************************************************************************/
 
-void 
+static void 
 activateOnePollFilter(LADSPA_Handle Instance) {
   ((OnePollFilter *)Instance)->m_fLastOutput = 0;
 }
@@ -79,7 +85,7 @@ activateOnePollFilter(LADSPA_Handle Instance) {
 /*****************************************************************************/
 
 /** Run the LPF algorithm for a block of SampleCount samples. */
-void 
+static void 
 runOnePollLowPassFilter(LADSPA_Handle Instance,
 			unsigned long SampleCount) {
 
@@ -127,7 +133,7 @@ runOnePollLowPassFilter(LADSPA_Handle Instance,
 /*****************************************************************************/
 
 /** Run the HPF algorithm for a block of SampleCount samples. */
-void 
+static void 
 runOnePollHighPassFilter(LADSPA_Handle Instance,
 		       unsigned long SampleCount) {
 

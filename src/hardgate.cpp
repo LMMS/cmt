@@ -23,7 +23,7 @@
 
 /*****************************************************************************/
 
-#include <stdlib.h>
+#include <cstdlib>
 
 /*****************************************************************************/
 
@@ -39,7 +39,10 @@ namespace hardgate {
 	port_output    = 2,
 	n_ports        = 3
     };
-    
+
+    static void run(LADSPA_Handle instance,
+                    unsigned long sample_count);
+  
 /** This plugin sets its input signal to 0 if it falls below a threshold. */
     class Plugin : public CMT_PluginInstance {
     public:
@@ -54,8 +57,8 @@ namespace hardgate {
 	
     };
     
-    void run(LADSPA_Handle instance,
-	     unsigned long sample_count) {
+    static void run(LADSPA_Handle instance,
+                    unsigned long sample_count) {
 	
 	Plugin *pp = (Plugin *) instance;
 	

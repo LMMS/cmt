@@ -21,8 +21,8 @@
 
 /*****************************************************************************/
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 /*****************************************************************************/
 
@@ -132,6 +132,10 @@ public:
 #define GRN_GRAIN_LENGTH 4
 #define GRN_GRAIN_ATTACK 5
 
+static void activateGrainScatter(LADSPA_Handle Instance);
+static void runGrainScatter(LADSPA_Handle Instance,
+                            unsigned long SampleCount);
+
 /** This plugin cuts an audio stream up and uses it to generate a
     granular texture. */
 class GrainScatter : public CMT_PluginInstance {
@@ -178,7 +182,7 @@ public:
 /*****************************************************************************/
 
 /** Initialise and activate a plugin instance. */
-void
+static void
 activateGrainScatter(LADSPA_Handle Instance) {
 
   GrainScatter * poGrainScatter = (GrainScatter *)Instance;
@@ -195,7 +199,7 @@ activateGrainScatter(LADSPA_Handle Instance) {
 
 /*****************************************************************************/
 
-void 
+static void 
 runGrainScatter(LADSPA_Handle Instance,
 		unsigned long SampleCount) {
 

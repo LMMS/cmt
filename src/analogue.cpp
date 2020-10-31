@@ -24,9 +24,8 @@
 
 /*****************************************************************************/
 
-#include <malloc.h>
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
 #include "cmt.h"
 
 #define PORT_OUT            0
@@ -262,6 +261,8 @@ public:
     LADSPA_Data filt_lfo_mod;
     LADSPA_Data **ports;
 
+    a = b = c = 0;
+    
     ports = analogue->m_ppfPorts;
     gate = (*ports[PORT_GATE] > 0.0);
     if (gate == 1 && analogue->trigger == 0)

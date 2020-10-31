@@ -31,9 +31,9 @@
 
 /*****************************************************************************/
 
-#include <math.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cmath>
+#include <cstdlib>
+#include <cstring>
 
 /*****************************************************************************/
 
@@ -57,6 +57,11 @@
 #define ENC_OUT_V 12
 
 /*****************************************************************************/
+
+static void runBFormatEncoder(LADSPA_Handle Instance,
+                              unsigned long SampleCount);
+static void runFMHFormatEncoder(LADSPA_Handle Instance,
+                                unsigned long SampleCount);
 
 /** This plugin encodes a signal to B-Format depending on where it is
     located in a virtual space. */
@@ -98,6 +103,9 @@ public:
 #define F2B_OUT_Y 11
 #define F2B_OUT_Z 12
 
+static void runFMHToB(LADSPA_Handle Instance,
+                      unsigned long SampleCount);
+
 /** This plugin coverts FMH-Format to B-Format. This is a trivial
     operation that can also be achieved simply by discarding RSTUV
     channels. */
@@ -120,6 +128,9 @@ public:
 #define DECST_OUT_L 4
 #define DECST_OUT_R 5
 
+static void runBFormatToStereo(LADSPA_Handle Instance,
+                               unsigned long SampleCount);
+
 /** This plugin decodes B-Format to produce a stereo speaker feed. */
 class BFormatToStereo : public CMT_PluginInstance {
 public:
@@ -141,6 +152,9 @@ public:
 #define DECQ_OUT_FR 5
 #define DECQ_OUT_BL 6
 #define DECQ_OUT_BR 7
+
+static void runBFormatToQuad(LADSPA_Handle Instance,
+                             unsigned long SampleCount);
 
 /** This plugin decodes B-Format to produce a quad (square) speaker feed. */
 class BFormatToQuad : public CMT_PluginInstance {
@@ -167,6 +181,9 @@ public:
 #define DECC_OUT_TFR 9
 #define DECC_OUT_TBL 10
 #define DECC_OUT_TBR 11
+
+static void runBFormatToCube(LADSPA_Handle Instance,
+                             unsigned long SampleCount);
 
 /** This plugin decodes B-Format to produce a speaker feed for eight
     speakers arranged at the corners of a cube. */
@@ -200,6 +217,9 @@ public:
 #define DECO_OUT_BLL  15
 #define DECO_OUT_FLL  16
 
+static void runFMHFormatToOct(LADSPA_Handle Instance,
+                              unsigned long SampleCount);
+
 /** This plugin decodes FMH-Format to produce a speaker feed for eight
     speakers arranged at the corners of an octagon. */
 class FMHFormatToOct : public CMT_PluginInstance {
@@ -223,6 +243,9 @@ public:
 #define BFROT_OUT_X    6
 #define BFROT_OUT_Y    7
 #define BFROT_OUT_Z    8
+
+static void runBFormatRotation(LADSPA_Handle Instance,
+                               unsigned long SampleCount);
 
 /** This plugin rotates an B-Format soundfield around the Z-axis. */
 class BFormatRotation : public CMT_PluginInstance {
@@ -259,6 +282,9 @@ public:
 #define FMHROT_OUT_U    17
 #define FMHROT_OUT_V    18
 
+static void runFMHFormatRotation(LADSPA_Handle Instance,
+                                 unsigned long SampleCount);
+
 /** This plugin rotates an FMH-Format soundfield around the Z-axis. */
 class FMHFormatRotation : public CMT_PluginInstance {
 public:
@@ -272,7 +298,7 @@ public:
 
 /*****************************************************************************/
 
-void 
+static void 
 runBFormatEncoder(LADSPA_Handle Instance,
 		  unsigned long SampleCount) {
 
@@ -314,7 +340,7 @@ runBFormatEncoder(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runFMHFormatEncoder(LADSPA_Handle Instance,
 		    unsigned long SampleCount) {
 
@@ -379,7 +405,7 @@ runFMHFormatEncoder(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runFMHToB(LADSPA_Handle Instance,
 	  unsigned long SampleCount) {
 
@@ -403,7 +429,7 @@ runFMHToB(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void
+static void
 runBFormatToStereo(LADSPA_Handle Instance,
 		   unsigned long SampleCount) {
 
@@ -428,7 +454,7 @@ runBFormatToStereo(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void
+static void
 runBFormatToQuad(LADSPA_Handle Instance,
 		 unsigned long SampleCount) {
 
@@ -460,7 +486,7 @@ runBFormatToQuad(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void
+static void
 runBFormatToCube(LADSPA_Handle Instance,
 		 unsigned long SampleCount) {
 
@@ -504,7 +530,7 @@ runBFormatToCube(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void
+static void
 runFMHFormatToOct(LADSPA_Handle Instance,
 		  unsigned long SampleCount) {
 
@@ -549,7 +575,7 @@ runFMHFormatToOct(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void
+static void
 runBFormatRotation(LADSPA_Handle Instance,
 		   unsigned long SampleCount) {
 
@@ -587,7 +613,7 @@ runBFormatRotation(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void
+static void
 runFMHFormatRotation(LADSPA_Handle Instance,
 		     unsigned long SampleCount) {
 

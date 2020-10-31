@@ -24,8 +24,8 @@
 
 /*****************************************************************************/
 
-#include <malloc.h>
-#include <math.h>
+#include <cmath>
+#include <cstdlib>
 #include "cmt.h"
 
 #define PORT_OUT       0

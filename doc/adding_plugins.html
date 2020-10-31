@@ -1,13 +1,22 @@
+<HTML>
+  <HEAD>
+    <TITLE>CMT Documentation</TITLE>
+    <META NAME="DESCRIPTION"
+          CONTENT="CMT Documentation">
+  </HEAD>
+  <BODY BGCOLOR=#FFFFFF>
+    
+    <CENTER><IMG BORDER=0 SRC="/images/top.jpg"></CENTER>
+
+    <HR/>
+
+
 <H1>Adding Plugins to the CMT Library</H1>
 
 <P>The CMT <A HREF="http://www.ladspa.org">
 LADSPA</A> plugin collection is written in C++ and uses a little
 additional sophistication to make plugin writing easier. This document
 describes how to add a new plugin to the toolkit.</P>
-
-<P>At the moment CMT is not under public version control, so please
-send changes to <A HREF="mailto:richard@muse.demon.co.uk">Richard
-Furse</A>.</P>
 
 <P>CMT plugins interpret <CODE>LADSPA_Handle</CODE> entities as
 pointers to objects derived from the <CODE>CMT_PluginInstance</CODE>
@@ -34,10 +43,8 @@ to <CODE>registerNewPluginDescriptor()</CODE>. The
 and <CODE>addPort()</CODE> methods.</P>
 
 <P>All plugins need unique IDs. During development, use values between
-1 and 1000. When the plugin is ready, please request an ID from <A
-HREF="mailto:ladspa@muse.demon.co.uk">ladspa@muse.demon.co.uk</A>. Please
-also add a brief description of your module to <A
-HREF="plugins.html"><CODE>plugins.html</CODE></A>.</P>
+1 and 1000. When the plugin is ready, please request a block of IDs
+from <A HREF="mailto:ids@ladspa.org">ids@ladspa.org</A>.</P>
 
 <P>In practice, CMT plugin writing is probably best learned by
 example. For a simple case, see the <CODE>mixer.cpp</CODE>
@@ -52,3 +59,35 @@ available in <CODE>cmt.h</CODE> and <CODE>ladspa.h</CODE>.</P>
 <P>CMT plugins are <A HREF="license.html">licenced</A> under GPL
 version 2. Please read and understand this license before submitting
 plugins to the library.</P>
+
+<HR/>
+
+<H1>CMT Index</H1>
+
+<UL>
+  <LI><A HREF="overview.html">Overview</A></LI>
+  <LI><A HREF="http://www.ladspa.org/download/index.html">Download</A></LI>
+  <LI><A HREF="installation.html">Installation</A></LI>
+  <LI><A HREF="license.html">License (LGPL)</A></LI>
+  <LI><A HREF="plugins.html">Plugins in the Library</A></LI>
+  <LI><A HREF="adding_plugins.html">Adding Plugins to the Library</A></LI>
+  <LI><A HREF="changes.html">Change History</A></LI>
+  <LI><A HREF="bugs.html">Bugs</A></LI>
+</UL>
+
+<H2>Other Links</H2>
+
+<UL>
+  <LI>
+    The <A HREF="http://www.ladspa.org/ladspa_sdk/overview.html">LADSPA
+      Software Development Kit</A>
+  </LI>
+</UL>
+
+
+    <HR/>
+
+    <CENTER><IMG BORDER=0 SRC="/images/base.jpg"></CENTER>
+
+  </BODY>
+</HTML>

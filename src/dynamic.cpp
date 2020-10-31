@@ -34,9 +34,9 @@
 
 /*****************************************************************************/
 
-#include <math.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cmath>
+#include <cstdlib>
+#include <cstring>
 
 /*****************************************************************************/
 
@@ -71,6 +71,16 @@ protected:
 #define CE_INPUT      4
 #define CE_OUTPUT     5
 
+static void activateCompressorExpander(void * pvHandle);
+static void runCompressor_Peak(LADSPA_Handle Instance,
+                               unsigned long SampleCount);
+static void runCompressor_RMS(LADSPA_Handle Instance,
+                              unsigned long SampleCount);
+static void runExpander_Peak(LADSPA_Handle Instance,
+                             unsigned long SampleCount);
+static void runExpander_RMS(LADSPA_Handle Instance,
+                            unsigned long SampleCount);
+  
 /** This class is used to implement simple compressor and expander
     plugins. Attack and decay times are applied at the level detection
     stage rather than at gain processing. No delay is applied to the
@@ -105,6 +115,12 @@ public:
 #define LN_INPUT      3
 #define LN_OUTPUT     4
 
+static void activateLimiter(void * pvHandle);
+static void runLimiter_Peak(LADSPA_Handle Instance,
+                            unsigned long SampleCount);
+static void runLimiter_RMS(LADSPA_Handle Instance,
+                           unsigned long SampleCount);
+  
 /** This class is used to implement simple limiter plugins. Attack and
     decay times are applied at the level detection stage rather than
     at gain processing. No delay is applied to the main signal. Both
@@ -129,7 +145,7 @@ public:
 
 /*****************************************************************************/
 
-void 
+static void 
 activateCompressorExpander(void * pvHandle) {
   CompressorExpander * poProcessor = (CompressorExpander *)pvHandle;
   poProcessor->m_fEnvelopeState = 0;
@@ -137,7 +153,7 @@ activateCompressorExpander(void * pvHandle) {
 
 /*****************************************************************************/
 
-void 
+static void 
 activateLimiter(void * pvHandle) {
   Limiter * poProcessor = (Limiter *)pvHandle;
   poProcessor->m_fEnvelopeState = 0;
@@ -145,7 +161,7 @@ activateLimiter(void * pvHandle) {
 
 /*****************************************************************************/
 
-void 
+static void 
 runCompressor_Peak(LADSPA_Handle Instance,
 		   unsigned long SampleCount) {
 
@@ -193,7 +209,7 @@ runCompressor_Peak(LADSPA_Handle Instance,
       fGain = 1;
     else {
       fGain = pow(rfEnvelopeState * fOneOverThreshold, fRatioMinusOne);
-      if (isnan(fGain))
+      if (std::isnan(fGain))
 	fGain = 0;
     }
 
@@ -204,7 +220,7 @@ runCompressor_Peak(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runCompressor_RMS(LADSPA_Handle Instance,
 		  unsigned long SampleCount) {
   
@@ -254,7 +270,7 @@ runCompressor_RMS(LADSPA_Handle Instance,
       fGain = 1;
     else {
       fGain = pow(fEnvelopeAmplitude * fOneOverThreshold, fRatioMinusOne);
-      if (isnan(fGain))
+      if (std::isnan(fGain))
 	fGain = 0;
     }
 
@@ -265,7 +281,7 @@ runCompressor_RMS(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runExpander_Peak(LADSPA_Handle Instance,
 		 unsigned long SampleCount) {
 
@@ -313,7 +329,7 @@ runExpander_Peak(LADSPA_Handle Instance,
       fGain = 1;
     else {
       fGain = pow(rfEnvelopeState * fOneOverThreshold, fOneMinusRatio);
-      if (isnan(fGain))
+      if (std::isnan(fGain))
 	fGain = 0;
     }
 
@@ -324,7 +340,7 @@ runExpander_Peak(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runExpander_RMS(LADSPA_Handle Instance,
 		  unsigned long SampleCount) {
   
@@ -374,7 +390,7 @@ runExpander_RMS(LADSPA_Handle Instance,
       fGain = 1; 
     else {
       fGain = pow(fEnvelopeAmplitude * fOneOverThreshold, fOneMinusRatio);
-      if (isnan(fGain))
+      if (std::isnan(fGain))
 	fGain = 0;
     }
 
@@ -385,7 +401,7 @@ runExpander_RMS(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runLimiter_Peak(LADSPA_Handle Instance,
 		unsigned long SampleCount) {
 
@@ -429,7 +445,7 @@ runLimiter_Peak(LADSPA_Handle Instance,
       fGain = 1;
     else {
       fGain = fThreshold / rfEnvelopeState;
-      if (isnan(fGain))
+      if (std::isnan(fGain))
 	fGain = 0;
     }
 
@@ -440,7 +456,7 @@ runLimiter_Peak(LADSPA_Handle Instance,
 
 /*****************************************************************************/
 
-void 
+static void 
 runLimiter_RMS(LADSPA_Handle Instance,
 		unsigned long SampleCount) {
 
@@ -486,7 +502,7 @@ runLimiter_RMS(LADSPA_Handle Instance,
       fGain = 1;
     else {
       fGain = fThreshold / fEnvelopeAmplitude;
-      if (isnan(fGain))
+      if (std::isnan(fGain))
 	fGain = 0;
     }
 

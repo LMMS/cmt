@@ -21,9 +21,9 @@
 
 /*****************************************************************************/
 
+#include <cstdlib>
+#include <cstring>
 #include <ladspa.h>
-#include <stdlib.h>
-#include <string.h>
 
 /*****************************************************************************/
 
@@ -36,7 +36,7 @@ void finalise_modules();
 
 /*****************************************************************************/
 
-int 
+static int 
 pluginNameComparator(const void * pvDescriptor1, const void * pvDescriptor2) {
 
   const CMT_Descriptor * psDescriptor1
@@ -55,9 +55,9 @@ pluginNameComparator(const void * pvDescriptor1, const void * pvDescriptor2) {
 
 /*****************************************************************************/
 
-CMT_Descriptor ** g_ppsRegisteredDescriptors = NULL;
-unsigned long g_lPluginCapacity = 0;
-unsigned long g_lPluginCount = 0;
+static CMT_Descriptor ** g_ppsRegisteredDescriptors = NULL;
+static unsigned long g_lPluginCapacity = 0;
+static unsigned long g_lPluginCount = 0;
 
 /*****************************************************************************/
 
@@ -108,7 +108,9 @@ public:
     finalise_modules();
   }
 
-} g_oStartupShutdownHandler;
+};
+
+static StartupShutdownHandler g_oStartupShutdownHandler;
   
 /*****************************************************************************/
 

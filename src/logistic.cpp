@@ -26,7 +26,7 @@
 
 /*****************************************************************************/
 
-#include <stdlib.h>
+#include <cstdlib>
 
 /*****************************************************************************/
 
@@ -46,7 +46,11 @@ namespace logistic {
 	n_ports          = 3
     };
     
-    /** This plugin uses the logistic map to generate periodic or
+    static void activate(LADSPA_Handle instance);
+    static void run(LADSPA_Handle instance,
+                    unsigned long sample_count);	
+
+  /** This plugin uses the logistic map to generate periodic or
 	chaotic control signals. */
     class Plugin : public CMT_PluginInstance {
     private:
@@ -70,15 +74,15 @@ namespace logistic {
 			unsigned long sample_count);	
     };
     
-    void activate(LADSPA_Handle instance) {
+    static void activate(LADSPA_Handle instance) {
 	Plugin *pp = (Plugin *) instance;
 	Plugin &p  = *pp;
 	
 	p.x = 0.3; // arbitrary non-zero value.
     }
 
-    void run(LADSPA_Handle instance,
-	     unsigned long sample_count) {
+    static void run(LADSPA_Handle instance,
+	            unsigned long sample_count) {
 
 	Plugin *pp = (Plugin *) instance;
 	Plugin &p  = *pp;

@@ -11,7 +11,7 @@ INSTALL_PLUGINS_DIR	=	/usr/lib/ladspa/
 # GENERAL
 #
 
-CFLAGS		=	$(INCLUDES) -Wall -O3 -fPIC
+CFLAGS		=	$(INCLUDES) -Wall -Werror -O2 -fPIC
 CXXFLAGS	=	$(CFLAGS)
 PLUGIN_LIB	=	../plugins/cmt.so
 
@@ -65,13 +65,17 @@ plugin:	$(PLUGIN_LIB)
 
 targets:	$(PLUGIN_LIB)
 
-$(PLUGIN_LIB):	$(PLUGIN_OBJECTS)
+$(PLUGIN_LIB):	$(PLUGIN_OBJECTS) gcc_exports.map
 	$(CXX)	-shared							\
+		$(CFLAGS)						\
+		-fvisibility=hidden					\
+		-fvisibility-inlines-hidden				\
+		-s							\
+		-Wl,--version-script=gcc_exports.map			\
 		-o $(PLUGIN_LIB)					\
 		$(PLUGIN_OBJECTS)					
 
 install:	$(PLUGIN_LIB)
-	-strip $(PLUGIN_LIB)
 	cp $(PLUGIN_LIB) $(INSTALL_PLUGINS_DIR)
 
 test:	/tmp/test.wav ../../ladspa_sdk/snd/noise.wav always

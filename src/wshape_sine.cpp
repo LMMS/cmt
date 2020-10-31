@@ -21,8 +21,8 @@
 
 /*****************************************************************************/
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
 
 /*****************************************************************************/
 
@@ -34,6 +34,9 @@
 #define WSS_INPUT   1
 #define WSS_OUTPUT  2
 
+static void runSineWaveshaper(LADSPA_Handle Instance,
+                              unsigned long SampleCount);
+
 /** This plugin applies a gain to a mono signal. */
 class SineWaveshaper : public CMT_PluginInstance {
 public:
@@ -44,13 +47,13 @@ public:
   }
 
   friend void runSineWaveshaper(LADSPA_Handle Instance,
-			       unsigned long SampleCount);
+                                unsigned long SampleCount);
 
 };
 
 /*****************************************************************************/
 
-void 
+static void 
 runSineWaveshaper(LADSPA_Handle Instance,
 		   unsigned long SampleCount) {
   
