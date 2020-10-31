@@ -67,7 +67,7 @@ namespace disintegrator {
     };
 
     template<OutputFunction write_output>
-    static void run(LADSPA_Handle instance,
+    void run(LADSPA_Handle instance,
 	            unsigned long sample_count) {
 	
 	Plugin *pp = (Plugin *) instance;
