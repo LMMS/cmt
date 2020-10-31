@@ -59,8 +59,7 @@ namespace pink_full {
 	
         Plugin(const LADSPA_Descriptor *,
 	       unsigned long s_rate) : 
-	    CMT_PluginInstance(n_ports), 
-	    sample_rate(s_rate) {
+	    CMT_PluginInstance(n_ports) {
 	}
 	
 	~Plugin() {
