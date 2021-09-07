@@ -3,8 +3,7 @@
    (c) 2002 Nathaniel Virgo
 
    Computer Music Toolkit - a library of LADSPA plugins. Copyright (C)
-   2000-2002 Richard W.E. Furse. The author may be contacted at
-   richard@muse.demon.co.uk.
+   2000-2002 Richard W.E. Furse.
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public Licence as
@@ -42,6 +41,9 @@ namespace disintegrator {
 	n_ports          = 4
     };
 
+    template<OutputFunction write_output>
+    static void run(LADSPA_Handle instance,
+	            unsigned long sample_count);
     static void set_run_adding_gain(LADSPA_Handle instance,
                                     LADSPA_Data new_gain);
 
