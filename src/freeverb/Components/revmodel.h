@@ -11,6 +11,9 @@
 #include "allpass.h"
 #include "tuning.h"
 
+// enough for largest possible samplerate, 8 * 96000
+const int maxsampleratio = 18;
+
 class revmodel
 {
 public:
