@@ -1,8 +1,7 @@
 /* ambisonic.cpp
 
    Computer Music Toolkit - a library of LADSPA plugins. Copyright (C)
-   2000-2002 Richard W.E. Furse. The author may be contacted at
-   richard@muse.demon.co.uk.
+   2000-2002 Richard W.E. Furse.
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public Licence as
@@ -22,12 +21,10 @@
 /*****************************************************************************/
 
 /* This module provides simple plugins handling B-Format and
-   FMH-Format audio. Ambisonics is a mathematical technique designed
-   to capture the sound field around point. See
-   http://www.muse.demon.co.uk/3daudio.html. "Ambisonics" is a
-   registered trademark of Nimbus Communications International
-   although. An exteremly `vanilla' approach is taken to encoding
-   distance, using inverse square, but no filtering or delay. */
+   FMH-Format audio (also known as FuMa). Ambisonics is a mathematical
+   technique designed to capture the sound field around a point. An
+   exteremly `vanilla' approach is taken to encoding distance, using
+   inverse square, but no filtering or delay. */
 
 /*****************************************************************************/
 
