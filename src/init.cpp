@@ -114,6 +114,10 @@ static StartupShutdownHandler g_oStartupShutdownHandler;
   
 /*****************************************************************************/
 
+#ifdef _MSC_VER
+// needed to get it to compile on msvc
+__declspec(dllexport)
+#endif
 const LADSPA_Descriptor * 
 ladspa_descriptor(unsigned long Index) {
   if (Index < g_lPluginCount)
