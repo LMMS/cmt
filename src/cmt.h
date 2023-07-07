@@ -21,6 +21,10 @@
 #ifndef CMT_BASE_INCLUDED
 #define CMT_BASE_INCLUDED
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846264338327
+#endif
+
 /*****************************************************************************/
 
 #include "ladspa_types.h"
