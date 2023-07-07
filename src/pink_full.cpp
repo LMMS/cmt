@@ -6,8 +6,7 @@
 
    Part of the Computer Music Toolkit - a library of LADSPA plugins. 
    The Computer Music Toolkit is Copyright (C) 2000-2002 
-   Richard W.E. Furse. The author may be contacted at
-   richard@muse.demon.co.uk.
+   Richard W.E. Furse.
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public Licence as
@@ -53,13 +52,12 @@ namespace pink_full {
 	Voss-McCartney algorithm described at www.firstpr.com.au/dsp/pink-noise/ */
     class Plugin : public CMT_PluginInstance {
     private:
-	LADSPA_Data sample_rate;
 	PinkNoise noise_source;
     public:
 	
         Plugin(const LADSPA_Descriptor *,
-	       unsigned long s_rate) : 
-	    CMT_PluginInstance(n_ports) {
+	       unsigned long) : 
+            CMT_PluginInstance(n_ports) {
 	}
 	
 	~Plugin() {

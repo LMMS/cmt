@@ -1,8 +1,7 @@
 /* delay.cpp
 
    Computer Music Toolkit - a library of LADSPA plugins. Copyright (C)
-   2000-2002 Richard W.E. Furse. The author may be contacted at
-   richard@muse.demon.co.uk.
+   2000-2002 Richard W.E. Furse.
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public Licence as
@@ -43,23 +42,23 @@
 
 /*****************************************************************************/
 
-#define LIMIT_BETWEEN(x, a, b)          \
+#define LIMIT_BETWEEN(x, a, b)			\
 (((x) < a) ? a : (((x) > b) ? b : (x)))
 
 /*****************************************************************************/
 
 #define DL_DELAY_LENGTH 0
-#define DL_DRY_WET      1
-#define DL_INPUT        2
-#define DL_OUTPUT       3
+#define DL_DRY_WET	1
+#define DL_INPUT	2
+#define DL_OUTPUT	3
 /* Present only on feedback delays: */
-#define DL_FEEDBACK     4
+#define DL_FEEDBACK	4
 
 static void activateDelayLine(LADSPA_Handle Instance);
 static void runSimpleDelayLine(LADSPA_Handle Instance,
-                               unsigned long SampleCount);
+			       unsigned long SampleCount);
 static void runFeedbackDelayLine(LADSPA_Handle Instance,
-                                 unsigned long SampleCount);
+				 unsigned long SampleCount);
 
 /** This class is used to implement delay line plugins. Different
     maximum delay times are supported as are both echo and feedback
@@ -94,7 +93,7 @@ public:
       m_fMaximumDelay(fMaximumDelay) {
     /* Buffer size is a power of two bigger than max delay time. */
     unsigned long lMinimumBufferSize 
-      = (unsigned long)((LADSPA_Data)lSampleRate * m_fMaximumDelay);
+      = (unsigned long)((LADSPA_Data)lSampleRate * m_fMaximumDelay) + 1;
     m_lBufferSize = 1;
     while (m_lBufferSize < lMinimumBufferSize)
       m_lBufferSize <<= 1;
@@ -162,11 +161,11 @@ runSimpleDelayLine(LADSPA_Handle Instance,
        lSampleIndex < SampleCount;
        lSampleIndex++) {
     LADSPA_Data fInputSample = *(pfInput++);
+    pfBuffer[((lSampleIndex + lBufferWriteOffset)
+	      & lBufferSizeMinusOne)] = fInputSample;
     *(pfOutput++) = (fDry * fInputSample
 		     + fWet * pfBuffer[((lSampleIndex + lBufferReadOffset)
 					& lBufferSizeMinusOne)]);
-    pfBuffer[((lSampleIndex + lBufferWriteOffset)
-	      & lBufferSizeMinusOne)] = fInputSample;
   }
 
   poDelayLine->m_lWritePointer
@@ -189,6 +188,12 @@ runFeedbackDelayLine(LADSPA_Handle Instance,
 		   0,
 		   poDelayLine->m_fMaximumDelay)
      * poDelayLine->m_fSampleRate);
+  if (lDelay == 0) {
+    /* The logic below uses read-then-write, to handle
+       feedback. Because of this, a value of zero won't do what the
+       user expects. */
+    lDelay = 1;
+  }
 
   LADSPA_Data * pfInput
     = poDelayLine->m_ppfPorts[DL_INPUT];
@@ -237,10 +242,10 @@ runFeedbackDelayLine(LADSPA_Handle Instance,
 template <long lMaximumDelayMilliseconds>
 static LADSPA_Handle 
 CMT_Delay_Instantiate(const LADSPA_Descriptor * Descriptor,
-		      unsigned long             SampleRate) {
+		      unsigned long		SampleRate) {
   return new DelayLine(SampleRate,
-			     LADSPA_Data(lMaximumDelayMilliseconds
-					 * 0.001));
+		       LADSPA_Data(lMaximumDelayMilliseconds
+				   * 0.001));
 }
 
 /*****************************************************************************/

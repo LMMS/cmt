@@ -2,9 +2,8 @@
 
    Computer Music Toolkit - a library of LADSPA plugins. Copyright (C)
    2000-2002 Richard W.E. Furse. Freeverb is also Copyright (C) 2000
-   Jezar. Richard may be contacted at richard@muse.demon.co.uk. [V1
-   Ported to LADSPA 15/7/2000 Richard W.E. Furse, V3 ported to CMT
-   4/11/2000.]
+   Jezar. [V1 Ported to LADSPA 15/7/2000 Richard W.E. Furse, V3 ported
+   to CMT 4/11/2000.]
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public Licence as
@@ -58,7 +57,7 @@ public:
 
   Freeverb3(const LADSPA_Descriptor *, unsigned long lSampleRate)
     : CMT_PluginInstance(FV_NumPorts),
-    revmodel((float)lSampleRate / 44100.0f) {
+      revmodel((float)lSampleRate) {
   }
   friend void activateFreeverb3(LADSPA_Handle Instance);
   friend void runFreeverb3(LADSPA_Handle Instance, 
