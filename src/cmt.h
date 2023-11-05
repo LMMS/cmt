@@ -138,7 +138,10 @@ protected:
     : m_ppfPorts(new LADSPA_Data_ptr[lPortCount]) {
   }
   virtual ~CMT_PluginInstance() {
-    delete [] m_ppfPorts;
+    if (m_ppfPorts != nullptr){
+      delete [] m_ppfPorts;
+      m_ppfPorts = nullptr; // set pointer to nullptr after deletion
+    }
   }
 
   friend void CMT_ConnectPort(LADSPA_Handle Instance,
